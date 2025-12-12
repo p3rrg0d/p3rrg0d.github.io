@@ -232,9 +232,9 @@ function playHeroAnimations() {
                 y: 0,
                 opacity: 1,
                 scale: 1,
-                stagger: 0.15, // Even slower for "plavnishe"
-                duration: 0.8, // Slower movement
-                ease: "back.out(1.2)", // Smoother, gentle pop
+                stagger: 0.15,
+                duration: 0.8,
+                ease: "back.out(1.2)",
                 onComplete: initLetterFloat
             }
             , "-=0.5")

@@ -1,16 +1,12 @@
 :root {
-    /* --- PALETTE --- */
     --c-neon: #CCFF00;
     --c-pink: #FF005C;
     --c-blue: #2E86DE;
-
     --c-black: #000000;
     --c-white: #FFFFFF;
     --c-gray-light: #F0F0F0;
     --c-gray-dark: #121212;
     --c-gray-card: #1E1E1E;
-
-    /* --- SEMANTIC TOKENS (Light Defaults) --- */
     --bg-main: var(--c-gray-light);
     --bg-card: var(--c-white);
     --text-main: var(--c-black);
@@ -18,17 +14,14 @@
     --border-color: var(--c-black);
     --shadow-color: var(--c-black);
     --accent-primary: var(--c-neon);
-
     --f-main: 'Syne', sans-serif;
     --f-wide: 'Unbounded', sans-serif;
-
     --border-thick: 3px solid var(--border-color);
     --shadow-hard: 8px 8px 0px var(--shadow-color);
     --shadow-hover: 12px 12px 0px var(--shadow-color);
     --radius-toy: 20px;
 }
 
-/* --- DARK MODE OVERRIDES --- */
 body.dark-mode {
     --bg-main: var(--c-gray-dark);
     --bg-card: var(--c-gray-card);
@@ -36,7 +29,6 @@ body.dark-mode {
     --text-inv: var(--c-black);
     --border-color: var(--c-white);
     --shadow-color: var(--c-white);
-    /* White shadows for pop */
     --accent-primary: var(--c-neon);
 }
 
@@ -55,7 +47,6 @@ body {
     transition: background-color 0.3s ease, color 0.3s ease;
 }
 
-/* --- BACKGROUND DECOR --- */
 .bg-pattern {
     position: fixed;
     top: 0;
@@ -66,7 +57,6 @@ body {
     background-size: 20px 20px;
     opacity: 0.3;
     z-index: -2;
-    /* Behind toys */
     pointer-events: none;
 }
 
@@ -83,30 +73,25 @@ body {
             var(--c-blue) 20px);
     z-index: -1;
     transform: scaleY(0);
-    /* Hidden initially */
     transform-origin: top;
 }
 
-/* --- CURSOR --- */
 .cursor {
     position: fixed;
     width: 50px;
     height: 50px;
     background: transparent;
     border: 1px solid rgba(255, 255, 255, 0.5);
-    /* Subtle border for definition */
     border-radius: 50%;
     pointer-events: none;
     z-index: 9999;
     transform: translate(-50%, -50%);
     transition: transform 0.1s, border-color 0.3s, background-color 0.3s;
-    /* "Negative" and "Blur" effect */
     backdrop-filter: invert(1) blur(4px);
     -webkit-backdrop-filter: invert(1) blur(4px);
     box-shadow: none;
 }
 
-/* --- PRELOADER (Hacker Console) --- */
 .preloader {
     position: fixed;
     top: 0;
@@ -114,7 +99,6 @@ body {
     width: 100%;
     height: 100%;
     background: var(--c-gray-dark);
-    /* Always dark for hacker vibe */
     z-index: 10000;
     display: flex;
     align-items: center;
@@ -151,7 +135,6 @@ body {
     }
 }
 
-/* --- HERO --- */
 .hero {
     height: 100vh;
     display: flex;
@@ -161,12 +144,10 @@ body {
     position: relative;
     padding: 2rem;
     pointer-events: none;
-    /* Let events pass through to background toys */
 }
 
 .hero>* {
     pointer-events: auto;
-    /* Restore events for content */
 }
 
 .sticker-badge {
@@ -181,7 +162,6 @@ body {
     border: 2px solid var(--border-color);
     box-shadow: 4px 4px 0px var(--shadow-color);
     opacity: 0;
-    /* Hidden initially for animation */
 }
 
 .top-left {
@@ -207,17 +187,13 @@ body {
 
 .word {
     font-size: 10vw;
-    /* Smaller text */
     font-weight: 800;
     -webkit-text-stroke: 3px var(--border-color);
     color: transparent;
     transition: color 0.1s;
     position: relative;
     opacity: 0;
-    /* Hidden initially */
 }
-
-
 
 .accent-neon {
     color: var(--c-neon);
@@ -227,10 +203,8 @@ body {
 
 .letter {
     display: inline-block;
-    /* Animation handled by GSAP now */
     transform-origin: center bottom;
 }
-
 
 @keyframes letter-float {
 
@@ -274,7 +248,6 @@ body {
     }
 }
 
-/* --- FLOATING TOYS --- */
 .floating-toys {
     position: fixed;
     top: 0;
@@ -292,14 +265,12 @@ body {
     transition: transform 0.3s ease;
     pointer-events: auto;
     opacity: 0;
-    /* Hidden initially */
 }
 
 .toy-shape.cursor-hover {
     transform: scale(1.3);
 }
 
-/* --- 3D CUBE CHAOS --- */
 .cube-wrapper {
     position: absolute;
     top: 50%;
@@ -307,7 +278,6 @@ body {
     transform: translate(-50%, -50%);
     perspective: 1000px;
     z-index: 0;
-    /* Behind text but visible */
     pointer-events: none;
 }
 
@@ -316,9 +286,7 @@ body {
     height: 200px;
     position: relative;
     transform-style: preserve-3d;
-    /* animation: cube-spin 10s linear infinite; REMOVED to let GSAP control it initially */
     transform: scale(0);
-    /* Hidden initially */
 }
 
 .face {
@@ -333,7 +301,6 @@ body {
     font-size: 3rem;
     font-weight: 900;
     color: var(--c-black);
-    /* Keep face content black for contrast on neon */
     box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.1);
     animation: color-cycle 4s infinite alternate;
 }
@@ -390,8 +357,6 @@ body {
     }
 }
 
-/* --- TETROMINOES --- */
-/* BIGGER TETROMINOES */
 .shape-i {
     width: 80px;
     height: 200px;
@@ -447,16 +412,11 @@ body {
     margin-top: 50px;
     font-size: 0.9rem;
     opacity: 0;
-    /* Strict hidden initially */
     transform: skewY(-5deg);
-    /* Angled like text */
     align-self: flex-end;
-    /* Push to right */
     margin-right: 10%;
-    /* Spacing from edge */
 }
 
-/* --- THEME TOGGLE FIX --- */
 .theme-toggle {
     position: fixed;
     top: 20px;
@@ -484,13 +444,11 @@ body {
 body.dark-mode .theme-toggle {
     background: var(--c-gray-card);
     color: #FFFFFF !important;
-    /* Force white icon */
     border-color: #FFFFFF;
 }
 
 body.dark-mode .theme-toggle svg {
     fill: #FFFFFF !important;
-    /* Double force */
     stroke: #FFFFFF !important;
 }
 
@@ -509,7 +467,6 @@ body.dark-mode .theme-toggle svg {
     transition: transform 0.1s;
     font-size: 0.9rem;
     padding: 10px;
-    /* Padding for SVG */
 }
 
 .toy-btn-social svg {
@@ -525,14 +482,12 @@ body.dark-mode .theme-toggle svg {
 
 .toy-btn-social.tetris-t:hover {
     background: #A000F0;
-    /* Tetris Purple */
     box-shadow: 4px 4px 0px #A000F0;
     color: var(--c-white);
 }
 
 .hero-cta-container {
     margin-top: 60px;
-    /* More space */
 }
 
 .btn-toy {
@@ -563,7 +518,6 @@ body.dark-mode .theme-toggle svg {
     left: 0;
     width: 100%;
     background: var(--c-black);
-    /* Always black in light mode */
     color: var(--c-neon);
     padding: 15px 0;
     overflow: hidden;
@@ -572,16 +526,13 @@ body.dark-mode .theme-toggle svg {
     font-size: 1.2rem;
     border-top: 4px solid var(--c-neon);
     opacity: 0;
-    /* Hidden initially */
 }
 
-/* Explicit Dark Mode Override for this component */
 body.dark-mode .hero-footer-bar {
     background: var(--c-neon);
     color: var(--c-black);
     border-top: 4px solid var(--c-white);
 }
-
 
 .running-ticker {
     display: flex;
@@ -593,7 +544,6 @@ body.dark-mode .hero-footer-bar {
 .running-ticker span {
     flex-shrink: 0;
     padding-right: 20px;
-    /* Optional spacing if needed, but text has slash */
     display: block;
 }
 
@@ -607,7 +557,6 @@ body.dark-mode .hero-footer-bar {
     }
 }
 
-/* --- PROJECTS (BENTO) --- */
 .section-title {
     font-family: var(--f-wide);
     font-size: 4rem;
@@ -630,7 +579,6 @@ body.dark-mode .hero-footer-bar {
     max-width: 1200px;
     margin: 0 auto;
     perspective: 2000px;
-    /* Enable 3D space */
 }
 
 .toy-card {
@@ -665,7 +613,6 @@ body.dark-mode .hero-footer-bar {
     color: var(--text-main);
     animation: bounce-arrow 2s infinite ease-in-out;
     opacity: 0;
-    /* Hidden initially (GSAP will handle fade in) */
 }
 
 .scroll-indicator svg {
@@ -676,14 +623,15 @@ body.dark-mode .hero-footer-bar {
 @keyframes bounce-arrow {
 
     0%,
+    0%,
     100% {
         transform: translateX(-50%) translateY(0);
-        opacity: 1;
+        /* opacity: 1; - removed */
     }
 
     50% {
         transform: translateX(-50%) translateY(10px);
-        opacity: 0.6;
+        /* opacity: 0.6; - removed */
     }
 }
 
@@ -701,7 +649,6 @@ body.dark-mode .hero-footer-bar {
     color: var(--c-white);
 }
 
-/* --- DARK MODE CARDS --- */
 body.dark-mode .card-yellow {
     background: var(--c-gray-card);
     border-color: var(--c-neon);
@@ -722,7 +669,6 @@ body.dark-mode .card-blue {
 
 body.dark-mode .tag {
     background: var(--text-main);
-    /* White in dark mode */
     color: var(--c-black);
 }
 
@@ -795,160 +741,58 @@ body.dark-mode .card-blue .tag {
     color: var(--c-black);
 }
 
-/* --- FOOTER --- */
 .footer {
     padding: 100px 20px;
-    background: var(--bg-card);
-    color: var(--text-main);
     text-align: center;
+    background: var(--c-black);
+    color: var(--c-white);
+}
+
+.footer-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .footer-email {
-    display: inline-block;
     font-family: var(--f-wide);
-    font-weight: 900;
-    font-size: 2rem;
-    color: var(--text-main);
+    font-size: 3vw;
     text-decoration: none;
-    transition: transform 0.2s, color 0.2s;
-    border-bottom: 3px solid transparent;
+    color: var(--c-white);
+    font-weight: 900;
+    transition: color 0.3s;
+    display: flex;
+    gap: 20px;
+    align-items: center;
 }
 
 .footer-email:hover {
     color: var(--c-neon);
-    transform: scale(1.05);
-    border-bottom: 3px solid var(--c-neon);
 }
 
-.mega-link {
-    font-size: 10vw;
-    line-height: 0.9;
-    text-decoration: none;
-    color: var(--text-main);
-    display: block;
-    margin-bottom: 50px;
-    transition: transform 0.2s;
+.email-text {
+    -webkit-text-stroke: 1px var(--c-white);
+    color: transparent;
+    transition: all 0.3s;
 }
 
-.mega-link:hover {
-    transform: scale(0.95);
+.footer-email:hover .email-text {
+    color: var(--c-neon);
+    -webkit-text-stroke: 1px var(--c-neon);
+    text-shadow: 4px 4px 0px var(--c-pink);
 }
 
-.social-dock {
-    display: flex;
-    justify-content: center;
-    gap: 20px;
-}
-
-.toy-btn-social {
-    width: 60px;
-    height: 60px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: var(--bg-card);
-    color: var(--text-main);
-    font-weight: 900;
-    text-decoration: none;
-    border: var(--border-thick);
-    border-radius: 50%;
-    box-shadow: 4px 4px 0px var(--c-neon);
-    transition: transform 0.1s;
-}
-
-.toy-btn-social:hover {
-    transform: scale(1.2);
-    background: var(--c-neon);
-}
-
-/* --- ANIMATIONS (Utility) --- */
-.rumble-target {
-    display: inline-block;
-}
-
-/* RESPONSIVE */
 @media (max-width: 768px) {
     .word {
-        font-size: 20vw;
-    }
-
-    .hero-title {
-        transform: skewY(0deg);
-    }
-
-    .mega-link {
         font-size: 15vw;
     }
 
-    .hero {
-        padding: 80px 20px;
+    .hero-socials-dock {
+        margin-right: 0;
+        align-self: center;
     }
-}
 
-.theme-toggle {
-    position: fixed;
-    top: 20px;
-    right: 20px;
-    z-index: 9998;
-    width: 50px;
-    height: 50px;
-    border-radius: 50%;
-    border: 3px solid var(--border-color);
-    background: var(--bg-card);
-    box-shadow: 4px 4px 0px var(--shadow-color);
-    transition: transform 0.2s, background 0.3s;
-    pointer-events: auto;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.theme-toggle svg {
-    width: 24px;
-    height: 24px;
-    position: absolute;
-}
-
-.theme-toggle:hover {
-    transform: scale(1.1) rotate(15deg);
-    background: var(--c-neon);
-}
-
-/* Old dark mode block removed - handled by variables now */
-
-/* --- THEME TOGGLE FIX (FINAL) --- */
-.theme-toggle {
-    position: fixed;
-    top: 20px;
-    right: 20px;
-    background: var(--bg-card);
-    color: var(--text-main);
-    border: 2px solid var(--border-color);
-    border-radius: 50%;
-    width: 50px;
-    height: 50px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    z-index: 1000;
-    box-shadow: 4px 4px 0px var(--shadow-color);
-    transition: transform 0.1s;
-}
-
-.theme-toggle:hover {
-    transform: translate(-2px, -2px);
-    box-shadow: 6px 6px 0px var(--shadow-color);
-}
-
-body.dark-mode .theme-toggle {
-    background: var(--c-gray-card);
-    color: #FFFFFF !important;
-    border-color: #FFFFFF;
-}
-
-body.dark-mode .theme-toggle svg {
-    fill: #FFFFFF !important;
-    stroke: #FFFFFF !important;
-    color: #FFFFFF !important;
+    .racing-stripe {
+        display: none;
+    }
 }
