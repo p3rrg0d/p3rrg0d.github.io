@@ -1,23 +1,43 @@
 :root {
-
+    /* --- PALETTE --- */
     --c-neon: #CCFF00;
-
     --c-pink: #FF005C;
-
     --c-blue: #2E86DE;
 
     --c-black: #000000;
     --c-white: #FFFFFF;
-    --c-bg: #F0F0F0;
+    --c-gray-light: #F0F0F0;
+    --c-gray-dark: #121212;
+    --c-gray-card: #1E1E1E;
 
+    /* --- SEMANTIC TOKENS (Light Defaults) --- */
+    --bg-main: var(--c-gray-light);
+    --bg-card: var(--c-white);
+    --text-main: var(--c-black);
+    --text-inv: var(--c-white);
+    --border-color: var(--c-black);
+    --shadow-color: var(--c-black);
+    --accent-primary: var(--c-neon);
 
     --f-main: 'Syne', sans-serif;
     --f-wide: 'Unbounded', sans-serif;
 
-    --border-thick: 3px solid var(--c-black);
-    --shadow-hard: 8px 8px 0px var(--c-black);
-    --shadow-hover: 12px 12px 0px var(--c-black);
+    --border-thick: 3px solid var(--border-color);
+    --shadow-hard: 8px 8px 0px var(--shadow-color);
+    --shadow-hover: 12px 12px 0px var(--shadow-color);
     --radius-toy: 20px;
+}
+
+/* --- DARK MODE OVERRIDES --- */
+body.dark-mode {
+    --bg-main: var(--c-gray-dark);
+    --bg-card: var(--c-gray-card);
+    --text-main: var(--c-white);
+    --text-inv: var(--c-black);
+    --border-color: var(--c-white);
+    --shadow-color: var(--c-white);
+    /* White shadows for pop */
+    --accent-primary: var(--c-neon);
 }
 
 * {
@@ -25,14 +45,14 @@
     padding: 0;
     box-sizing: border-box;
     cursor: none;
-    /* Custom cursor */
 }
 
 body {
-    background-color: var(--c-bg);
-    color: var(--c-black);
+    background-color: var(--bg-main);
+    color: var(--text-main);
     font-family: var(--f-main);
     overflow-x: hidden;
+    transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 /* --- BACKGROUND DECOR --- */
@@ -42,10 +62,11 @@ body {
     left: 0;
     width: 100%;
     height: 100%;
-    background-image: radial-gradient(var(--c-black) 1px, transparent 1px);
+    background-image: radial-gradient(var(--border-color) 1px, transparent 1px);
     background-size: 20px 20px;
-    opacity: 0.1;
-    z-index: -1;
+    opacity: 0.3;
+    z-index: -2;
+    /* Behind toys */
     pointer-events: none;
 }
 
@@ -56,11 +77,14 @@ body {
     width: 20px;
     height: 100%;
     background: repeating-linear-gradient(45deg,
-            var(--c-black),
-            var(--c-black) 10px,
-            var(--c-neon) 10px,
-            var(--c-neon) 20px);
+            var(--c-white),
+            var(--c-white) 10px,
+            var(--c-blue) 10px,
+            var(--c-blue) 20px);
     z-index: -1;
+    transform: scaleY(0);
+    /* Hidden initially */
+    transform-origin: top;
 }
 
 /* --- CURSOR --- */
@@ -68,14 +92,63 @@ body {
     position: fixed;
     width: 50px;
     height: 50px;
-    background: var(--c-neon);
-    border: 2px solid var(--c-black);
+    background: transparent;
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    /* Subtle border for definition */
     border-radius: 50%;
     pointer-events: none;
     z-index: 9999;
     transform: translate(-50%, -50%);
-    transition: transform 0.1s;
-    mix-blend-mode: difference;
+    transition: transform 0.1s, border-color 0.3s, background-color 0.3s;
+    /* "Negative" and "Blur" effect */
+    backdrop-filter: invert(1) blur(4px);
+    -webkit-backdrop-filter: invert(1) blur(4px);
+    box-shadow: none;
+}
+
+/* --- PRELOADER (Hacker Console) --- */
+.preloader {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: var(--c-gray-dark);
+    /* Always dark for hacker vibe */
+    z-index: 10000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 1.5rem;
+    color: var(--c-neon);
+    padding: 2rem;
+}
+
+.console-container {
+    width: 100%;
+    max-width: 600px;
+}
+
+#console-output {
+    white-space: pre-wrap;
+    line-height: 1.5;
+}
+
+.cursor-blink {
+    animation: blink 1s step-end infinite;
+}
+
+@keyframes blink {
+
+    0%,
+    100% {
+        opacity: 1;
+    }
+
+    50% {
+        opacity: 0;
+    }
 }
 
 /* --- HERO --- */
@@ -87,19 +160,28 @@ body {
     align-items: center;
     position: relative;
     padding: 2rem;
+    pointer-events: none;
+    /* Let events pass through to background toys */
+}
+
+.hero>* {
+    pointer-events: auto;
+    /* Restore events for content */
 }
 
 .sticker-badge {
     position: absolute;
-    background: var(--c-black);
-    color: var(--c-white);
+    background: var(--bg-card);
+    color: var(--text-main);
     padding: 10px 20px;
     font-family: var(--f-wide);
     font-weight: 900;
     font-size: 0.8rem;
     transform: rotate(-15deg);
-    border: 2px solid var(--c-white);
-    box-shadow: 4px 4px 0px rgba(0, 0, 0, 0.2);
+    border: 2px solid var(--border-color);
+    box-shadow: 4px 4px 0px var(--shadow-color);
+    opacity: 0;
+    /* Hidden initially for animation */
 }
 
 .top-left {
@@ -127,20 +209,69 @@ body {
     font-size: 10vw;
     /* Smaller text */
     font-weight: 800;
-    -webkit-text-stroke: 3px var(--c-black);
+    -webkit-text-stroke: 3px var(--border-color);
     color: transparent;
     transition: color 0.1s;
     position: relative;
+    opacity: 0;
+    /* Hidden initially */
 }
 
-.word:hover {
-    color: var(--c-black);
-}
+
 
 .accent-neon {
     color: var(--c-neon);
-    -webkit-text-stroke: 3px var(--c-black);
-    text-shadow: 10px 10px 0px var(--c-black);
+    -webkit-text-stroke: 3px var(--border-color);
+    text-shadow: 10px 10px 0px var(--shadow-color);
+}
+
+.letter {
+    display: inline-block;
+    /* Animation handled by GSAP now */
+    transform-origin: center bottom;
+}
+
+
+@keyframes letter-float {
+
+    0%,
+    100% {
+        transform: translateY(0) rotate(0deg);
+    }
+
+    25% {
+        transform: translateY(-8px) rotate(-2deg);
+    }
+
+    50% {
+        transform: translateY(-4px) rotate(0deg);
+    }
+
+    75% {
+        transform: translateY(-10px) rotate(2deg);
+    }
+}
+
+@keyframes letter-bounce {
+    0% {
+        transform: scale(1) rotate(0deg);
+    }
+
+    30% {
+        transform: scale(1.3) rotate(-5deg);
+    }
+
+    50% {
+        transform: scale(0.9) rotate(3deg);
+    }
+
+    70% {
+        transform: scale(1.1) rotate(-2deg);
+    }
+
+    100% {
+        transform: scale(1) rotate(0deg);
+    }
 }
 
 /* --- FLOATING TOYS --- */
@@ -157,8 +288,15 @@ body {
 
 .toy-shape {
     position: absolute;
-    /* Removed default border/shadow to avoid frames around SVGs */
-    filter: drop-shadow(8px 8px 0px var(--c-black));
+    filter: drop-shadow(8px 8px 0px var(--shadow-color));
+    transition: transform 0.3s ease;
+    pointer-events: auto;
+    opacity: 0;
+    /* Hidden initially */
+}
+
+.toy-shape.cursor-hover {
+    transform: scale(1.3);
 }
 
 /* --- 3D CUBE CHAOS --- */
@@ -178,7 +316,9 @@ body {
     height: 200px;
     position: relative;
     transform-style: preserve-3d;
-    animation: cube-spin 10s linear infinite;
+    /* animation: cube-spin 10s linear infinite; REMOVED to let GSAP control it initially */
+    transform: scale(0);
+    /* Hidden initially */
 }
 
 .face {
@@ -186,13 +326,14 @@ body {
     width: 200px;
     height: 200px;
     background: var(--c-neon);
-    border: 4px solid var(--c-black);
+    border: 4px solid var(--border-color);
     display: flex;
     align-items: center;
     justify-content: center;
     font-size: 3rem;
     font-weight: 900;
     color: var(--c-black);
+    /* Keep face content black for contrast on neon */
     box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.1);
     animation: color-cycle 4s infinite alternate;
 }
@@ -303,9 +444,54 @@ body {
 .hero-socials-dock {
     display: flex;
     gap: 20px;
-    margin-top: 30px;
+    margin-top: 50px;
+    font-size: 0.9rem;
+    opacity: 0;
+    /* Strict hidden initially */
     transform: skewY(-5deg);
-    /* Angled like the text */
+    /* Angled like text */
+    align-self: flex-end;
+    /* Push to right */
+    margin-right: 10%;
+    /* Spacing from edge */
+}
+
+/* --- THEME TOGGLE FIX --- */
+.theme-toggle {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background: var(--bg-card);
+    color: var(--text-main);
+    border: 2px solid var(--border-color);
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    z-index: 1000;
+    box-shadow: 4px 4px 0px var(--shadow-color);
+    transition: transform 0.1s;
+}
+
+.theme-toggle:hover {
+    transform: translate(-2px, -2px);
+    box-shadow: 6px 6px 0px var(--shadow-color);
+}
+
+body.dark-mode .theme-toggle {
+    background: var(--c-gray-card);
+    color: #FFFFFF !important;
+    /* Force white icon */
+    border-color: #FFFFFF;
+}
+
+body.dark-mode .theme-toggle svg {
+    fill: #FFFFFF !important;
+    /* Double force */
+    stroke: #FFFFFF !important;
 }
 
 .toy-btn-social {
@@ -314,8 +500,8 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
-    background: var(--c-white);
-    color: var(--c-black);
+    background: var(--bg-card);
+    color: var(--text-main);
     text-decoration: none;
     border: var(--border-thick);
     border-radius: 50%;
@@ -352,8 +538,8 @@ body {
 .btn-toy {
     display: inline-block;
     padding: 20px 40px;
-    background: var(--c-black);
-    color: var(--c-white);
+    background: var(--bg-card);
+    color: var(--text-main);
     font-family: var(--f-wide);
     font-weight: 900;
     font-size: 1.5rem;
@@ -377,6 +563,7 @@ body {
     left: 0;
     width: 100%;
     background: var(--c-black);
+    /* Always black in light mode */
     color: var(--c-neon);
     padding: 15px 0;
     overflow: hidden;
@@ -384,7 +571,17 @@ body {
     font-weight: 900;
     font-size: 1.2rem;
     border-top: 4px solid var(--c-neon);
+    opacity: 0;
+    /* Hidden initially */
 }
+
+/* Explicit Dark Mode Override for this component */
+body.dark-mode .hero-footer-bar {
+    background: var(--c-neon);
+    color: var(--c-black);
+    border-top: 4px solid var(--c-white);
+}
+
 
 .running-ticker {
     display: inline-block;
@@ -413,8 +610,8 @@ body {
     font-weight: 900;
     text-align: center;
     margin-bottom: 60px;
-    color: var(--c-black);
-    -webkit-text-stroke: 2px var(--c-black);
+    color: var(--text-main);
+    -webkit-text-stroke: 2px var(--border-color);
     text-shadow: 6px 6px 0px var(--c-neon);
 }
 
@@ -428,15 +625,16 @@ body {
     gap: 40px;
     max-width: 1200px;
     margin: 0 auto;
+    perspective: 2000px;
+    /* Enable 3D space */
 }
 
 .toy-card {
-    background: var(--c-white);
+    background: var(--bg-card);
     border: var(--border-thick);
     border-radius: var(--radius-toy);
     padding: 30px;
     position: relative;
-    box-shadow: var(--shadow-hard);
     display: flex;
     flex-direction: column;
     gap: 20px;
@@ -446,7 +644,6 @@ body {
 
 .toy-card:hover {
     transform: translateY(-10px) scale(1.02);
-    box-shadow: 12px 16px 0px var(--c-black);
 }
 
 .scroll-indicator {
@@ -463,6 +660,8 @@ body {
     font-size: 0.8rem;
     color: var(--c-black);
     animation: bounce-arrow 2s infinite ease-in-out;
+    opacity: 0;
+    /* Hidden initially (GSAP will handle fade in) */
 }
 
 .scroll-indicator svg {
@@ -504,7 +703,7 @@ body {
     font-family: var(--f-wide);
     font-weight: 900;
     font-size: 1.5rem;
-    border-bottom: 3px solid var(--c-black);
+    border-bottom: 3px solid var(--border-color);
     padding-bottom: 10px;
 }
 
@@ -537,8 +736,8 @@ body {
 }
 
 .tag {
-    background: var(--c-black);
-    color: var(--c-white);
+    background: var(--text-main);
+    color: var(--bg-card);
     padding: 5px 15px;
     border-radius: 20px;
     font-family: var(--f-wide);
@@ -555,8 +754,8 @@ body {
 /* --- FOOTER --- */
 .footer {
     padding: 100px 20px;
-    background: var(--c-black);
-    color: var(--c-white);
+    background: var(--bg-card);
+    color: var(--text-main);
     text-align: center;
 }
 
@@ -565,7 +764,7 @@ body {
     font-family: var(--f-wide);
     font-weight: 900;
     font-size: 2rem;
-    color: var(--c-white);
+    color: var(--text-main);
     text-decoration: none;
     transition: transform 0.2s, color 0.2s;
     border-bottom: 3px solid transparent;
@@ -579,17 +778,16 @@ body {
 
 .mega-link {
     font-size: 10vw;
-    font-weight: 900;
     line-height: 0.9;
     text-decoration: none;
-    color: var(--c-white);
+    color: var(--text-main);
     display: block;
     margin-bottom: 50px;
     transition: transform 0.2s;
 }
 
 .mega-link:hover {
-    transform: scale(1.05);
+    transform: scale(0.95);
 }
 
 .social-dock {
@@ -604,8 +802,8 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
-    background: var(--c-white);
-    color: var(--c-black);
+    background: var(--bg-card);
+    color: var(--text-main);
     font-weight: 900;
     text-decoration: none;
     border: var(--border-thick);
@@ -651,9 +849,9 @@ body {
     width: 50px;
     height: 50px;
     border-radius: 50%;
-    border: 3px solid var(--c-black);
-    background: var(--c-white);
-    box-shadow: 4px 4px 0px var(--c-black);
+    border: 3px solid var(--border-color);
+    background: var(--bg-card);
+    box-shadow: 4px 4px 0px var(--shadow-color);
     transition: transform 0.2s, background 0.3s;
     pointer-events: auto;
     display: flex;
@@ -672,55 +870,41 @@ body {
     background: var(--c-neon);
 }
 
-body.dark-mode {
-    --c-bg: #1a1a2e;
-    --c-black: #FFFFFF;
-    --c-white: #1a1a2e;
-    background-color: #1a1a2e;
-    color: #FFFFFF;
+/* Old dark mode block removed - handled by variables now */
+
+/* --- THEME TOGGLE FIX (FINAL) --- */
+.theme-toggle {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background: var(--bg-card);
+    color: var(--text-main);
+    border: 2px solid var(--border-color);
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    z-index: 1000;
+    box-shadow: 4px 4px 0px var(--shadow-color);
+    transition: transform 0.1s;
 }
 
-body.dark-mode .bg-pattern {
-    background-image: radial-gradient(#FFFFFF 1px, transparent 1px);
-    opacity: 0.05;
-}
-
-body.dark-mode .racing-stripe {
-    background: repeating-linear-gradient(45deg,
-            #FFFFFF,
-            #FFFFFF 10px,
-            var(--c-neon) 10px,
-            var(--c-neon) 20px);
-    opacity: 0.3;
-}
-
-body.dark-mode .cursor {
-    background: var(--c-pink);
-    border-color: #FFFFFF;
-}
-
-body.dark-mode .toy-card {
-    border-color: #FFFFFF;
-    box-shadow: 8px 8px 0px #FFFFFF;
-}
-
-body.dark-mode .section-title {
-    color: #FFFFFF;
-    -webkit-text-stroke-color: #FFFFFF;
+.theme-toggle:hover {
+    transform: translate(-2px, -2px);
+    box-shadow: 6px 6px 0px var(--shadow-color);
 }
 
 body.dark-mode .theme-toggle {
-    background: #1a1a2e;
+    background: var(--c-gray-card);
+    color: #FFFFFF !important;
     border-color: #FFFFFF;
-    box-shadow: 4px 4px 0px var(--c-neon);
 }
 
-body.dark-mode .hero-footer-bar {
-    background: var(--c-neon);
-    color: #1a1a2e;
-    border-top-color: #FFFFFF;
-}
-
-body.dark-mode .footer {
-    background: #0f0f1a;
+body.dark-mode .theme-toggle svg {
+    fill: #FFFFFF !important;
+    stroke: #FFFFFF !important;
+    color: #FFFFFF !important;
 }
