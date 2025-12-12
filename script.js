@@ -1,3 +1,4 @@
+
 gsap.registerPlugin(ScrollTrigger);
 
 const lenis = new Lenis({
@@ -33,12 +34,16 @@ document.querySelectorAll('a, button, .toy-card').forEach(el => {
 
 const nickname = document.querySelector('.hero-title .word');
 
-const staticShake = gsap.timeline({ repeat: -1, paused: true })
-    .to(nickname, { x: 1, y: -1, rotation: 0.3, duration: 0.05 })
-    .to(nickname, { x: -1, y: 1, rotation: -0.3, duration: 0.05 })
-    .to(nickname, { x: 1, y: 0, rotation: 0.2, duration: 0.05 })
-    .to(nickname, { x: -1, y: -1, rotation: -0.2, duration: 0.05 })
-    .to(nickname, { x: 0, y: 1, rotation: 0.1, duration: 0.05 });
+gsap.set(nickname, { x: 0, y: 0, rotation: 0, scale: 1, force3D: true });
+
+const staticShake = gsap.to(nickname, {
+    x: () => gsap.utils.random(-1, 1),
+    rotation: () => gsap.utils.random(-0.3, 0.3),
+    duration: 0.2,
+    ease: "sine.inOut",
+    yoyo: true,
+    repeat: -1
+});
 
 nickname.addEventListener('mouseenter', () => {
     staticShake.pause();
@@ -84,30 +89,39 @@ rumbleElements.forEach(el => {
     });
 });
 
-const tl = gsap.timeline({
-    onComplete: () => {
-        staticShake.play();
-    }
-});
+const tl = gsap.timeline();
 tl.from('.sticker-badge', {
     scale: 0,
-    rotation: 720,
-    duration: 0.5,
+    rotation: 360,
+    duration: 0.8,
     stagger: 0.2,
-    ease: "back.out(1.5)"
+    ease: "back.out(1.2)"
 })
     .from('.word', {
-        y: 100,
+        y: 80,
         opacity: 0,
-        stagger: 0.1,
-        duration: 0.4,
-        ease: "power4.out"
+        scale: 0.9,
+        stagger: 0.15,
+        duration: 0.8,
+        ease: "power3.out"
+    }, "-=0.5")
+    .from('.hero-socials-dock', {
+        y: 30,
+        opacity: 0,
+        duration: 0.6,
+        ease: "power2.out"
     }, "-=0.3")
     .from('.hero-footer-bar', {
-        y: 100,
-        duration: 0.5,
-        ease: "bounce.out"
-    });
+        y: 50,
+        duration: 0.6,
+        ease: "power2.out"
+    }, "-=0.3")
+    .from('.scroll-indicator', {
+        y: 20,
+        opacity: 0,
+        duration: 0.4,
+        ease: "power2.out"
+    }, "-=0.5");
 
 gsap.utils.toArray('.toy-shape').forEach(shape => {
     gsap.to(shape, {
