@@ -584,13 +584,17 @@ body.dark-mode .hero-footer-bar {
 
 
 .running-ticker {
-    display: inline-block;
+    display: flex;
+    width: max-content;
     white-space: nowrap;
-    animation: marquee 10s linear infinite;
+    animation: marquee 20s linear infinite;
 }
 
 .running-ticker span {
-    display: inline-block;
+    flex-shrink: 0;
+    padding-right: 20px;
+    /* Optional spacing if needed, but text has slash */
+    display: block;
 }
 
 @keyframes marquee {
@@ -693,6 +697,46 @@ body.dark-mode .hero-footer-bar {
 }
 
 .card-blue {
+    background: var(--c-blue);
+    color: var(--c-white);
+}
+
+/* --- DARK MODE CARDS --- */
+body.dark-mode .card-yellow {
+    background: var(--c-gray-card);
+    border-color: var(--c-neon);
+    color: var(--c-neon);
+}
+
+body.dark-mode .card-pink {
+    background: var(--c-gray-card);
+    border-color: var(--c-pink);
+    color: var(--c-pink);
+}
+
+body.dark-mode .card-blue {
+    background: var(--c-gray-card);
+    border-color: var(--c-blue);
+    color: var(--c-blue);
+}
+
+body.dark-mode .tag {
+    background: var(--text-main);
+    /* White in dark mode */
+    color: var(--c-black);
+}
+
+body.dark-mode .card-yellow .tag {
+    background: var(--c-neon);
+    color: var(--c-black);
+}
+
+body.dark-mode .card-pink .tag {
+    background: var(--c-pink);
+    color: var(--c-white);
+}
+
+body.dark-mode .card-blue .tag {
     background: var(--c-blue);
     color: var(--c-white);
 }

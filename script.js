@@ -165,7 +165,7 @@ function initLetterFloat() {
         gsap.to(letter, {
             y: () => gsap.utils.random(-12, 12),
             rotation: () => gsap.utils.random(-5, 5),
-            duration: gsap.utils.random(1.5, 2.5),
+            duration: gsap.utils.random(3.5, 4.5),
             ease: "sine.inOut",
             yoyo: true,
             repeat: -1,
@@ -232,9 +232,9 @@ function playHeroAnimations() {
                 y: 0,
                 opacity: 1,
                 scale: 1,
-                stagger: 0.1, // Slower stagger for distinct "lap lap"
-                duration: 0.5,
-                ease: "back.out(2)", // Snappier ease
+                stagger: 0.15, // Even slower for "plavnishe"
+                duration: 0.8, // Slower movement
+                ease: "back.out(1.2)", // Smoother, gentle pop
                 onComplete: initLetterFloat
             }
             , "-=0.5")
