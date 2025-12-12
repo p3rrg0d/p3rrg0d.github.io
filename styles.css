@@ -662,7 +662,7 @@ body.dark-mode .hero-footer-bar {
     font-family: var(--f-wide);
     font-weight: 700;
     font-size: 0.8rem;
-    color: var(--c-black);
+    color: var(--text-main);
     animation: bounce-arrow 2s infinite ease-in-out;
     opacity: 0;
     /* Hidden initially (GSAP will handle fade in) */
