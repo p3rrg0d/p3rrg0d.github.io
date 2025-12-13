@@ -782,17 +782,192 @@ body.dark-mode .card-blue .tag {
     text-shadow: 4px 4px 0px var(--c-pink);
 }
 
+/* --- MOBILE RESPONSE --- */
+
 @media (max-width: 768px) {
+
+    /* Hero Adjustments */
     .word {
-        font-size: 15vw;
+        font-size: 11vw;
+        /* Smaller font size */
     }
 
     .hero-socials-dock {
         margin-right: 0;
         align-self: center;
+        gap: 12px;
+        flex-wrap: wrap;
+        justify-content: center;
+        margin-top: 30px;
+    }
+
+    .toy-btn-social {
+        width: 40px;
+        height: 40px;
+        padding: 8px;
     }
 
     .racing-stripe {
         display: none;
+    }
+
+    .hero-title {
+        transform: skewY(-5deg) scale(0.85);
+    }
+
+    /* 3D Cube adjustment for smaller screens */
+    .cube-wrapper {
+        transform: translate(-50%, -50%) scale(0.6);
+    }
+
+    /* Projects Section */
+    .section-title {
+        font-size: 1.8rem;
+        word-wrap: break-word;
+        padding: 0 10px;
+        margin-bottom: 40px;
+    }
+
+    .projects {
+        padding: 40px 10px;
+    }
+
+    .bento-grid {
+        gap: 15px;
+        grid-template-columns: 1fr;
+    }
+
+    .toy-card {
+        min-height: auto;
+        padding: 20px;
+    }
+
+    .toy-title {
+        font-size: 1.8rem;
+    }
+
+    /* Footer */
+    .footer-email {
+        font-size: 1.2rem;
+        flex-direction: column;
+        gap: 5px;
+    }
+
+    .footer {
+        padding: 40px 20px;
+    }
+
+    /* Mobile Tetrominos */
+    .shape-i {
+        width: 40px;
+        height: 100px;
+    }
+
+    .shape-j {
+        width: 60px;
+        height: 90px;
+    }
+
+    .shape-l {
+        width: 60px;
+        height: 90px;
+    }
+
+    .shape-o {
+        width: 60px;
+        height: 60px;
+    }
+
+    .shape-s {
+        width: 90px;
+        height: 60px;
+    }
+
+    .shape-t {
+        width: 90px;
+        height: 60px;
+    }
+
+    .shape-z {
+        width: 90px;
+        height: 60px;
+    }
+}
+
+@media (max-width: 480px) {
+    .word {
+        font-size: 13.5vw;
+        display: flex;
+        /* Removes whitespace between inline-block letters */
+        justify-content: center;
+        white-space: nowrap;
+        /* Forces one line */
+        width: 100%;
+    }
+
+    .hero-content {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .hero-socials-dock {
+        margin-top: 20px;
+        gap: 10px;
+    }
+
+    .toy-btn-social {
+        width: 38px;
+        height: 38px;
+    }
+
+    .running-ticker {
+        font-size: 0.8rem;
+    }
+
+    .cube-wrapper {
+        transform: translate(-50%, -50%) scale(0.45);
+    }
+
+    /* Adjust floating shapes to not cover text */
+    .shape-i,
+    .shape-j,
+    .shape-l,
+    .shape-o,
+    .shape-s,
+    .shape-t,
+    .shape-z {
+        transform: scale(0.5);
+    }
+
+    /* Card adjustments for very small screens */
+    .toy-title {
+        font-size: 1.5rem;
+    }
+
+    .card-header {
+        font-size: 1.2rem;
+    }
+}
+
+/* Touch Devices: Remove Custom Cursor */
+@media (pointer: coarse) {
+    .cursor {
+        display: none !important;
+    }
+
+    * {
+        cursor: auto !important;
+    }
+
+    /* Disable hover effects that stick */
+    .toy-card:hover {
+        transform: none;
+    }
+
+    .toy-btn-social:hover {
+        transform: none;
+        /* Keep background change for feedback but no scale */
     }
 }

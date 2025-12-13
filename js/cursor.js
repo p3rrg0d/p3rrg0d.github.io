@@ -1,4 +1,5 @@
 export function initCursor() {
+    if (window.matchMedia("(pointer: coarse)").matches) return;
     const cursor = document.querySelector('.cursor');
     let mouseX = 0, mouseY = 0;
     let cursorX = 0, cursorY = 0;
