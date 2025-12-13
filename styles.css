@@ -440,7 +440,7 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
-    cursor: pointer;
+    cursor: none;
     z-index: 1000;
     box-shadow: 4px 4px 0px var(--shadow-color);
     transition: transform 0.1s;
