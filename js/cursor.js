@@ -1,8 +1,12 @@
 export function initCursor() {
     if (window.matchMedia("(pointer: coarse)").matches) return;
+
     const cursor = document.querySelector('.cursor');
+    const ring = document.querySelector('.cursor-ring');
+
     let mouseX = 0, mouseY = 0;
     let cursorX = 0, cursorY = 0;
+    let ringX = 0, ringY = 0;
 
     document.addEventListener('mousemove', (e) => {
         mouseX = e.clientX;
@@ -10,21 +14,24 @@ export function initCursor() {
     });
 
     gsap.ticker.add(() => {
-        const dt = 1.0 - Math.pow(1.0 - 0.2, gsap.ticker.deltaRatio());
-        cursorX += (mouseX - cursorX) * dt;
-        cursorY += (mouseY - cursorY) * dt;
+        // Main cursor - fast follow
+        const dtFast = 1.0 - Math.pow(1.0 - 0.3, gsap.ticker.deltaRatio());
+        cursorX += (mouseX - cursorX) * dtFast;
+        cursorY += (mouseY - cursorY) * dtFast;
 
-        gsap.set(cursor, {
-            x: cursorX,
-            y: cursorY,
-            overwrite: "auto"
-        });
+        // Ring - slightly slower but keeps dot inside
+        const dtRing = 1.0 - Math.pow(1.0 - 0.2, gsap.ticker.deltaRatio());
+        ringX += (mouseX - ringX) * dtRing;
+        ringY += (mouseY - ringY) * dtRing;
+
+        gsap.set(cursor, { x: cursorX, y: cursorY });
+        gsap.set(ring, { x: ringX, y: ringY });
 
         checkCollisions(cursorX, cursorY);
     });
 
     function checkCollisions(cX, cY) {
-        const cursorRadius = 25;
+        const cursorRadius = 4;
 
         document.querySelectorAll('.hero-title .letter').forEach(letter => {
             checkElementCollision(letter, cX, cY, cursorRadius,
@@ -93,10 +100,12 @@ export function initCursor() {
 
     document.querySelectorAll('a, button, .toy-card').forEach(el => {
         el.addEventListener('mouseenter', () => {
-            gsap.to(cursor, { scale: 1.5, borderColor: '#FFF', borderWidth: '4px', duration: 0.1 });
+            gsap.to(cursor, { scale: 1.5, duration: 0.2, ease: "power2.out" });
+            gsap.to(ring, { scale: 1.3, duration: 0.3, ease: "power2.out" });
         });
         el.addEventListener('mouseleave', () => {
-            gsap.to(cursor, { scale: 1, borderColor: '#000', borderWidth: '2px', duration: 0.1 });
+            gsap.to(cursor, { scale: 1, duration: 0.2, ease: "power2.out" });
+            gsap.to(ring, { scale: 1, duration: 0.3, ease: "power2.out" });
         });
     });
 }

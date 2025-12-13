@@ -78,18 +78,27 @@ body {
 
 .cursor {
     position: fixed;
-    width: 50px;
-    height: 50px;
-    background: transparent;
-    border: 1px solid rgba(255, 255, 255, 0.5);
+    width: 8px;
+    height: 8px;
+    background: #FFFFFF;
+    border: none;
     border-radius: 50%;
     pointer-events: none;
     z-index: 9999;
     transform: translate(-50%, -50%);
-    transition: transform 0.1s, border-color 0.3s, background-color 0.3s;
-    backdrop-filter: invert(1) blur(4px);
-    -webkit-backdrop-filter: invert(1) blur(4px);
-    box-shadow: none;
+    mix-blend-mode: difference;
+}
+
+.cursor-ring {
+    position: fixed;
+    width: 24px;
+    height: 24px;
+    border: 1px solid rgba(255, 255, 255, 0.6);
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 9998;
+    transform: translate(-50%, -50%);
+    mix-blend-mode: difference;
 }
 
 .preloader {
@@ -144,6 +153,7 @@ body {
     position: relative;
     padding: 2rem;
     pointer-events: none;
+    user-select: none;
 }
 
 .hero>* {
